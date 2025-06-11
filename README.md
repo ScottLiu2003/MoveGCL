@@ -21,6 +21,15 @@ Where:
     - `t_wait`: Waiting time at the location.
     - `d_jump`: Distance jumped from the previous location.
 
+### Location vocabulary
+The location vocabulary for each city is stored in the `./location_feature` directory. Each `.npy` file corresponds to one city, where the *n*-th row represents the feature vector for the location with `location_id = n`.
+
+Each row is structured as follows:
+
+- **[0–33]**: Raw POI (Point of Interest) counts across different categories.
+- **[34–77]**: Normalized POI counts for each category.
+- **[78–79]**: Normalized geographic coordinates (latitude and longitude).
+- **[80]**: Mobility heat score, indicating location popularity or activity intensity.
 
 ## ⚙️ Installation
 ### Environment
