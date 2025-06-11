@@ -10,10 +10,10 @@ Our trajectory data is stored in the <code>traj_data</code> directory. Each line
 <code>1391097 0 8 1104,0,0,0,0;1137,0,9,9,1;1137,1,0,39,0;1137,2,3,51,0;1103,2,17,14,1;1137,2,22,5,1</code> 
 In this example: 
 - <code>1391097</code> is the user ID.
-- <code>0</code> is the quantized radius of gyration, denoted as \( r_{\mathrm{gyr}} \).
-- <code>8</code> is the quantized location entropy, denoted as \( H_{\mathrm{loc}} \).
+- <code>0</code> is the quantized radius of gyration, denoted as <code>r_gyr</code>.
+- <code>8</code> is the quantized location entropy, denoted as <code>H_loc</code>.
 - Each following entry, such as <code>1104,0,0,0,0</code>, represents a single point in the trajectory, with the fields defined as:
-- - <code>location_id</code>: the unique identifier of the location,
-  - - <code>day of week</code>: the day of the week (0 for Monday, ..., 6 for Sunday),
-    - - <code>time of day</code>: a time slot index within the day,
-      - - <code>t_{\mathrm{wait}}</code>: the waiting time at this location, - <code>d_{\mathrm{jump}}</code>: the jump distance from the previous location. 
+  - <code>location_id</code>: the unique identifier of the location,
+  - <code>day of week</code>: the day of the week (0 for Monday, ..., 6 for Sunday),
+  - <code>time of day</code>: a time slot index within the day,
+  - <code>t_{\mathrm{wait}}</code>: the waiting time at this location, - <code>d_{\mathrm{jump}}</code>: the jump distance from the previous location. 
