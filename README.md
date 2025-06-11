@@ -6,20 +6,20 @@
 MoveGCL is a scalable and privacy-preserving framework for training mobility foundation models via generative continual learning. Without sharing raw data, MoveGCL enables decentralized and progressive model evolution by replaying synthetic trajectories generated from a frozen teacher model, and reinforces knowledge retention through a tailored distillation strategy that mitigates catastrophic forgetting. To address the heterogeneity of mobility patterns, MoveGCL incorporates a Mixture-of-Experts Transformer with a mobility-aware expert routing mechanism, and employs a layer-wise progressive adaptation strategy to stabilize continual updates.
 
 ## Data set
-Our trajectory data is stored in the <code>traj_data</code> directory. Each line in the text files represents the trajectory of a single user over three consecutive days, formatted as follows: 
+### trajectory data
+The trajectory data is stored in the `traj_data` directory. Each line in the text files represents a single user's trajectory over three consecutive days, formatted as:
 <code>1391097 0 8 1104,0,0,0,0;1137,0,9,9,1;1137,1,0,39,0;1137,2,3,51,0;1103,2,17,14,1;1137,2,22,5,1</code> 
-In this example: 
-- <code>1391097</code> is the user ID.
-- <code>0</code> is the quantized radius of gyration, denoted as <code>r_gyr</code>.
-- <code>8</code> is the quantized location entropy, denoted as <code>H_loc</code>.
-- Each following entry, such as <code>1104,0,0,0,0</code>, represents a single point in the trajectory, with the fields defined as:
-  | Field         | Description                                |
-  | ------------- | ------------------------------------------ |
-  | `location_id` | Unique location identifier                 |
-  | `day_of_week` | 0 = Monday … 6 = Sunday                    |
-  | `time_slot`   | Index of the time interval within the day  |
-  | `t_wait`      | Waiting time at that location              |
-  | `d_jump`      | Distance jumped from the previous location |
+#### Example Breakdown:
+- `1391097`: User ID.
+- `0`: Quantized radius of gyration (`r_gyr`).
+- `8`: Quantized location entropy (`H_loc`).
+- Each subsequent entry (e.g., `1104,0,0,0,0`) represents a point in the trajectory with the following format: location_id, day_of_week, time_slot, t_wait, d_jump
+-- `location_id`: Unique identifier of the visited location.
+-- `day_of_week`: Day index (0 = Monday, ..., 6 = Sunday).
+-- `time_slot`: Index of the time interval within the day.
+-- `t_wait`: Waiting time at the location.
+-- `d_jump`: Distance jumped from the previous location.
+
 
 ## ⚙️ Installation
 ### Environment
@@ -49,9 +49,9 @@ Arguments:
 The trained model will be saved in the ./base_model directory.
 
 ### Stage-2 Generative continual learning
-- 2.1 Generate pseudo-trajectories
+#### 2.1 Generate pseudo-trajectories
 All scripts and data files live under `./GCL_data`.
-##### Build Empirical First-Location Distribution
+- Build Empirical First-Location Distribution
 Each time you train the model on a new city, you need to extract the empirical distribution of first locations conditioned on trajectory length (refer to Eq. 4 in the paper):
 ```bash
 python ./GCL_data/get_first_loc_distribute.py
