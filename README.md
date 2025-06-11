@@ -38,4 +38,7 @@ In this example:
 ### Get expert to froze
 Generative continual learning的Layer-Wise Progressive Adaptation中需要获模型中的哪些Experts需要被冻结，运行'./MoveGCL/get_experts_to_forze.py'，然后你需要在模型文件夹下找到文件'{model_file}/froze_info_file/layer_max_indices.txt'，这个文件中从上到下分别记录了最靠近输入到最靠近输出的层需要冻结的专家
 ### Continual learning
-持续学习的代码在'./MoveGCL/continual_learning.py'中
+持续学习的代码在'./MoveGCL/continual_learning.py'中，你可以通过
+<code>
+python ./MoveGCL/continual_learning_copy.py --teacher_model_root 'xxx' --Increm_root './MoveGCL/GCL_data/pseudo_traj/xxx' --city_Incerm 'xxx' --experts_froze ‘[[0, 1, 2],[0, 1, 3],[1, 2, 3],[1, 2, 3],[1, 3],[0]] --epoch 30 --B 128 --epoch 1.2e-4’
+</code>
