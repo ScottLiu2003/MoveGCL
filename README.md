@@ -32,25 +32,25 @@ In this example:
 ### Stage-2 Generative continual learning
 ### Generate pseudo-trajectories
 All scripts and data files live under `./GCL_data`.
-#### 1.Build Empirical First-Location Distribution
+#### 2.1 Build Empirical First-Location Distribution
 Whenever you train the model on a new city, extract the empirical distribution of first locations conditioned on trajectory length (see Eq. 4 in the paper):
 ```bash
 python ./GCL_data/get_first_loc_distribute.py
 ```
 This script reads <CITY_NAME>’s raw trajectories, and saves the result under ./MoveGCL/GCL_data/data_distribution/.
-#### 2.Sample Base Trajectories
+#### 2.2 Sample Base Trajectories
 Sample trajectories from the city’s dataset according to Eq. 3:
 ```bash
 python ./GCL_data/get_sample_data.py
 ```
 This pulls trajectories matching the empirical length distribution and writes them to <code>./GCL_data/sampled_data/</code>.
-#### 3.Replace First Locations
+#### 2.3 Replace First Locations
 Inject variability by replacing each sampled trajectory’s first point:
 ```bash
 python ./GCL_data/replace_first_loc.py
 ```
 For each trajectory, it draws a new first location from the precomputed distribution and overwrites the original, saving the modified trajectories to <code>./GCL_data/replaced_first_loc_data/</code>.
-#### 4.Generate Pseudo-Trajectories
+#### 2.4 Generate Pseudo-Trajectories
 Finally, synthesize full pseudo-trajectories per Eq. 5:
 ```bash
 python ./MoveGCL/GCL_data/gen_pseudo_traj.py
