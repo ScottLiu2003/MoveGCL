@@ -61,19 +61,19 @@ The trained model will be saved in the ./base_model directory.
 ### Stage-2 Generative continual learning
 #### 2.1 Generate pseudo-trajectories
 All scripts and data files live under `./GCL_data`.
-- Build Empirical First-Location Distribution
+- Build Empirical First-Location Distribution   
 Each time you train the model on a new city, you need to extract the empirical distribution of first locations conditioned on trajectory length (refer to Eq. 4 in the paper):
 ```bash
 python ./GCL_data/get_first_loc_distribute.py
 ```
 This script processes the raw trajectories of the target city and saves the resulting distribution to: `./GCL_data/data_distribution/`.
-- Sample Base Trajectories
+- Sample Base Trajectories   
 To prepare for pseudo-trajectory generation, sample base trajectories from the new city's dataset by running:
 ```bash
 python ./GCL_data/get_sample_data.py
 ```
 The sampled trajectories will be saved to the directory: `./GCL_data/sampled_data/`.
-- Replace First Locations
+- Replace First Locations   
 Inject variability by replacing the first point of each sampled trajectory:
 ```bash
 python ./GCL_data/replace_first_loc.py
