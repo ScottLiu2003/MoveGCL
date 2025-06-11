@@ -8,17 +8,18 @@ MoveGCL is a scalable and privacy-preserving framework for training mobility fou
 ## Data set
 ### trajectory data
 The trajectory data is stored in the `traj_data` directory. Each line in the text files represents a single user's trajectory over three consecutive days, formatted as:
-<code>1391097 0 8 1104,0,0,0,0;1137,0,9,9,1;1137,1,0,39,0;1137,2,3,51,0;1103,2,17,14,1;1137,2,22,5,1</code> 
+`1391097 0 8 1104,0,0,0,0;1137,0,9,9,1;1137,1,0,39,0;1137,2,3,51,0;1103,2,17,14,1;1137,2,22,5,1`
 #### Example Breakdown:
 - `1391097`: User ID.
 - `0`: Quantized radius of gyration (`r_gyr`).
 - `8`: Quantized location entropy (`H_loc`).
-- Each subsequent entry (e.g., `1104,0,0,0,0`) represents a point in the trajectory with the following format: location_id, day_of_week, time_slot, t_wait, d_jump
--- `location_id`: Unique identifier of the visited location.
--- `day_of_week`: Day index (0 = Monday, ..., 6 = Sunday).
--- `time_slot`: Index of the time interval within the day.
--- `t_wait`: Waiting time at the location.
--- `d_jump`: Distance jumped from the previous location.
+- Each subsequent entry (e.g., `1104,0,0,0,0`) represents a point in the trajectory with the following format: `location_id, day_of_week, time_slot, t_wait, d_jump` where:
+
+    - `location_id`: Unique identifier of the visited location.
+    - `day_of_week`: Day index (0 = Monday, ..., 6 = Sunday).
+    - `time_slot`: Index of the time interval within the day.
+    - `t_wait`: Waiting time at the location.
+    - `d_jump`: Distance jumped from the previous location.
 
 
 ## ⚙️ Installation
