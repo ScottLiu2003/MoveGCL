@@ -13,7 +13,11 @@ In this example:
 - <code>0</code> is the quantized radius of gyration, denoted as <code>r_gyr</code>.
 - <code>8</code> is the quantized location entropy, denoted as <code>H_loc</code>.
 - Each following entry, such as <code>1104,0,0,0,0</code>, represents a single point in the trajectory, with the fields defined as:
-  - <code>location_id</code>: the unique identifier of the location,
-  - <code>day of week</code>: the day of the week (0 for Monday, ..., 6 for Sunday),
-  - <code>time of day</code>: a time slot index within the day,
-  - <code>t_{\mathrm{wait}}</code>: the waiting time at this location, - <code>d_{\mathrm{jump}}</code>: the jump distance from the previous location. 
+  | Field         | Description                                |
+  | ------------- | ------------------------------------------ |
+  | `location_id` | Unique location identifier                 |
+  | `day_of_week` | 0 = Monday … 6 = Sunday                    |
+  | `time_slot`   | Index of the time interval within the day  |
+  | `t_wait`      | Waiting time at that location              |
+  | `d_jump`      | Distance jumped from the previous location |
+
