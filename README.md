@@ -7,14 +7,14 @@ MoveGCL is a scalable and privacy-preserving framework for training mobility fou
 
 ## Data set
 ### trajectory data
-The trajectory data is stored in the `traj_data` directory. Each line in the text files represents a single user's trajectory over three consecutive days, formatted as:  
+The trajectory data is stored in the `traj_data` directory. Each line in the text files represents a single user's trajectory over three consecutive days, formatted as: 
+
 `1391097 0 8 1104,0,0,0,0;1137,0,9,9,1;1137,1,0,39,0;1137,2,3,51,0;1103,2,17,14,1;1137,2,22,5,1`  
 Where:
 - `1391097`: User ID.
 - `0`: Quantized radius of gyration (`r_gyr`).
 - `8`: Quantized location entropy (`H_loc`).
 - Each subsequent entry (e.g., `1104,0,0,0,0`) represents a point in the trajectory with the following format: `location_id, day_of_week, time_slot, t_wait, d_jump` where:
-
     - `location_id`: Unique identifier of the visited location.
     - `day_of_week`: Day index (0 = Monday, ..., 6 = Sunday).
     - `time_slot`: Index of the time interval within the day.
@@ -61,19 +61,19 @@ The trained model will be saved in the ./base_model directory.
 ### Stage-2 Generative continual learning
 #### 2.1 Generate pseudo-trajectories
 All scripts and data files live under `./GCL_data`.
-##### 2.1.1  Build Empirical First-Location Distribution   
+##### 2.1.1 Build Empirical First-Location Distribution   
 Each time you train the model on a new city, you need to extract the empirical distribution of first locations conditioned on trajectory length (refer to Eq. 4 in the paper):
 ```bash
 python ./GCL_data/get_first_loc_distribute.py
 ```
 This script processes the raw trajectories of the target city and saves the resulting distribution to: `./GCL_data/data_distribution/`.
-- Sample Base Trajectories   
+##### 2.1.2 Sample Base Trajectories   
 To prepare for pseudo-trajectory generation, sample base trajectories from the new city's dataset by running:
 ```bash
 python ./GCL_data/get_sample_data.py
 ```
 The sampled trajectories will be saved to the directory: `./GCL_data/sampled_data/`.
-##### 2.1.2  Replace First Locations   
+##### 2.1.3 Replace First Locations   
 Inject variability by replacing the first point of each sampled trajectory:
 ```bash
 python ./GCL_data/replace_first_loc.py
@@ -86,7 +86,7 @@ python ./MoveGCL/GCL_data/gen_pseudo_traj.py
 ```
 This script outputs the synthesized pseudo-trajectories and saves them to `./GCL_data/pseudo_traj/`.
 
-##### 2.1.3  Retrieve Frequently Selected Experts
+##### 2.1.4 Retrieve Frequently Selected Experts
 Run the following script:
 ```bash
 ./get_experts_to_forze.py
