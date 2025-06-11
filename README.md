@@ -30,34 +30,53 @@ In this example:
 ### Stage-1 train base model
 训练base model的代码在'/train_base_model.py'中，你可以通过 <code>python ./MoveGCL/train_base_model.py --n_embd 512 --n_layer 6 --num_experts 4 --B 16 --city 'WashingtonDC' 'Seattle' 'Atlanta' --train_root '/data0/liuyukun/MoveGCL/traj_data/train' --val_root '/data0/liuyukun/MoveGCL/traj_data/val' --test_root '/data0/liuyukun/MoveGCL/traj_data/test' --epoch 30 --lr 1.2e-5</code> 运行这段代码，其中<code>n_embd</code>表示MoE transformer的隐藏维度，<code>n_layer</code>表示MoE transformer的层数，<code>num_experts</code>表示每一层MoE transformer中experts的数量。运行完后训练得到的模型会被存储到'./base_model'中
 ### Stage-2 Generative continual learning
-### Generate pseudo-trajectories
+#### 2.1 Generate pseudo-trajectories
 All scripts and data files live under `./GCL_data`.
-#### 2.1 Build Empirical First-Location Distribution
-Whenever you train the model on a new city, extract the empirical distribution of first locations conditioned on trajectory length (see Eq. 4 in the paper):
+##### Build Empirical First-Location Distribution
+Each time you train the model on a new city, you need to extract the empirical distribution of first locations conditioned on trajectory length (refer to Eq. 4 in the paper):
 ```bash
 python ./GCL_data/get_first_loc_distribute.py
 ```
-This script reads <CITY_NAME>’s raw trajectories, and saves the result under ./MoveGCL/GCL_data/data_distribution/.
-#### 2.2 Sample Base Trajectories
-Sample trajectories from the city’s dataset according to Eq. 3:
+This script processes the raw trajectories of the target city and saves the resulting distribution to: <code>./MoveGCL/GCL_data/data_distribution/</code>.
+##### Sample Base Trajectories
+To prepare for pseudo-trajectory generation, sample base trajectories from the new city's dataset by running:
 ```bash
 python ./GCL_data/get_sample_data.py
 ```
-This pulls trajectories matching the empirical length distribution and writes them to <code>./GCL_data/sampled_data/</code>.
-#### 2.3 Replace First Locations
-Inject variability by replacing each sampled trajectory’s first point:
+The sampled trajectories will be saved to the directory: <code>./GCL_data/sampled_data/</code>.
+##### Replace First Locations
+Inject variability by replacing the first point of each sampled trajectory:
 ```bash
 python ./GCL_data/replace_first_loc.py
 ```
-For each trajectory, it draws a new first location from the precomputed distribution and overwrites the original, saving the modified trajectories to <code>./GCL_data/replaced_first_loc_data/</code>.
-#### 2.4 Generate Pseudo-Trajectories
-Finally, synthesize full pseudo-trajectories per Eq. 5:
+For each trajectory, this script samples a new first location from the precomputed distribution and replaces the original one. The modified trajectories are saved to <code>./GCL_data/replaced_first_loc_data/</code>.
+##### Generate Pseudo-Trajectories
+Finally, generate full pseudo-trajectories (refer to Eq. 5 in the paper) by running:
 ```bash
 python ./MoveGCL/GCL_data/gen_pseudo_traj.py
 ```
-This produces the final set of pseudo-trajectories and writes them to <code>./MoveGCL/GCL_data/pseudo_traj/</code>
+This script outputs the synthesized pseudo-trajectories and saves them to <code>./MoveGCL/GCL_data/pseudo_traj/</code>
 
-### Continual learning
-持续学习的代码在'./MoveGCL/continual_learning.py'中，你可以通过
-<code>python ./continual_learning_copy.py --teacher_model 'xxx' --Increm_root './MoveGCL/GCL_data/pseudo_traj/xxx' --city_Incerm 'xxx' --experts_froze '[[0, 1, 2],[0, 1, 3],[1, 2, 3],[1, 2, 3],[1, 3],[0]]' --epoch 30 --B 128 --epoch 1.2e-4</code>
-其中teacher_model是旧模型f_old的路径，Increm_root是Generate pseudo-trajectories中生成pseudo-trajectories的路径，city_Incerm是持续学习中新数据对应的城市名，experts_froze是上一步Get expert to froze得到的被高频选中的专家
+#### 2.2 Retrieve Frequently Selected Experts
+Run the following script:
+```bash
+./get_experts_to_forze.py
+```
+This will generate a file at <code><model_folder>/froze_info_file/layer_max_indices.txt</code>, which records the most frequently selected expert for each layer. The layers are listed from top (closest to the output) to bottom (closest to the input).
+
+#### 2.3 Continual learning
+Code for continual learning is implemented in<code>./MoveGCL/continual_learning.py</code>. You can run it with the following command:
+```bash
+python ./continual_learning_copy.py \
+  --teacher_model 'xxx' \
+  --Increm_root './MoveGCL/GCL_data/pseudo_traj/xxx' \
+  --city_Incerm 'xxx' \
+  --experts_froze '[[0, 1, 2], [0, 1, 3], [1, 2, 3], [1, 2, 3], [1, 3], [0]]' \
+  --epoch 30 \
+  --B 128 \
+  --lr 1.2e-4
+```
+-<code>teacher_model</code>: Path to the pre-trained model f_old
+-<code>Increm_root</code>: Path to the pseudo-trajectories generated in 2.1.
+-<code>city_Incerm</code>: Name of the city used in the continual learning phase.
+-<code>experts_froze</code>: The list of frequently selected experts obtained in the Retrieve Frequently Selected Experts step.
