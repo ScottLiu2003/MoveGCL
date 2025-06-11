@@ -26,10 +26,10 @@ The location vocabulary for each city is stored in the `./location_feature` dire
 
 Each row is structured as follows:
 
-- **[0–33]**: Raw POI (Point of Interest) counts across different categories.
-- **[34–77]**: Normalized POI counts for each category.
-- **[78–79]**: Normalized geographic coordinates (latitude and longitude).
-- **[80]**: Mobility heat score, indicating location popularity or activity intensity.
+- [0–33]: Raw POI (Point of Interest) counts across different categories.
+- [34–77]: Normalized POI counts for each category.
+- [78–79]: Normalized geographic coordinates (latitude and longitude).
+- [80]: Mobility heat score, indicating location popularity or activity intensity.
 
 ## ⚙️ Installation
 ### Environment
@@ -61,7 +61,7 @@ The trained model will be saved in the ./base_model directory.
 ### Stage-2 Generative continual learning
 #### 2.1 Generate pseudo-trajectories
 All scripts and data files live under `./GCL_data`.
-- Build Empirical First-Location Distribution   
+##### 2.1.1  Build Empirical First-Location Distribution   
 Each time you train the model on a new city, you need to extract the empirical distribution of first locations conditioned on trajectory length (refer to Eq. 4 in the paper):
 ```bash
 python ./GCL_data/get_first_loc_distribute.py
@@ -73,7 +73,7 @@ To prepare for pseudo-trajectory generation, sample base trajectories from the n
 python ./GCL_data/get_sample_data.py
 ```
 The sampled trajectories will be saved to the directory: `./GCL_data/sampled_data/`.
-- Replace First Locations   
+##### 2.1.2  Replace First Locations   
 Inject variability by replacing the first point of each sampled trajectory:
 ```bash
 python ./GCL_data/replace_first_loc.py
@@ -86,7 +86,7 @@ python ./MoveGCL/GCL_data/gen_pseudo_traj.py
 ```
 This script outputs the synthesized pseudo-trajectories and saves them to `./GCL_data/pseudo_traj/`.
 
-#### 2.2 Retrieve Frequently Selected Experts
+##### 2.1.3  Retrieve Frequently Selected Experts
 Run the following script:
 ```bash
 ./get_experts_to_forze.py
