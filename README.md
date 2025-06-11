@@ -8,7 +8,6 @@ MoveGCL is a scalable and privacy-preserving framework for training mobility fou
 ## Data set
 ### trajectory data
 The trajectory data is stored in the `traj_data` directory. Each line in the text files represents a single user's trajectory over three consecutive days, formatted as: 
-
 `1391097 0 8 1104,0,0,0,0;1137,0,9,9,1;1137,1,0,39,0;1137,2,3,51,0;1103,2,17,14,1;1137,2,22,5,1`  
 Where:
 - `1391097`: User ID.
@@ -79,14 +78,14 @@ Inject variability by replacing the first point of each sampled trajectory:
 python ./GCL_data/replace_first_loc.py
 ```
 For each trajectory, this script samples a new first location from the precomputed distribution and replaces the original one. The modified trajectories are saved to `./GCL_data/replaced_first_loc_data/`.
-- Generate Pseudo-Trajectories
+##### 2.1.4 Generate Pseudo-Trajectories
 Finally, generate full pseudo-trajectories (refer to Eq. 5 in the paper) by running:
 ```bash
 python ./MoveGCL/GCL_data/gen_pseudo_traj.py
 ```
 This script outputs the synthesized pseudo-trajectories and saves them to `./GCL_data/pseudo_traj/`.
 
-##### 2.1.4 Retrieve Frequently Selected Experts
+#### 2.2 Retrieve Frequently Selected Experts
 Run the following script:
 ```bash
 ./get_experts_to_forze.py
