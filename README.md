@@ -60,6 +60,7 @@ Arguments:
 - `n_layer`: Number of layers in the MoE Transformer.
 - `num_experts`: Number of experts per layer in the MoE Transformer.
 - `city`: List of city names whose trajectory datasets are used to train the base model.   
+
 The trained model will be saved in the `./base_model directory`.
 
 ### Stage-2 Generative continual learning
@@ -72,7 +73,8 @@ python ./GCL_data/get_first_loc_distribute.py --city 'CITYNAME'
 ```
 Arguments:
 - `city`: Name of the target city, for example `--city 'Seattle'`.  
-This script processes the raw trajectories of the target city and saves the resulting distribution to: `./GCL_data/data_distribution/`.
+
+This script processes the raw trajectories of the target city and saves the resulting distribution to:`./GCL_data/data_distribution/`.
 ##### 2.1.2 Sample Base Trajectories   
 To prepare for pseudo-trajectory generation, sample base trajectories from the new city's dataset by running:
 ```bash
@@ -80,6 +82,7 @@ python ./GCL_data/get_sample_data.py --city 'CITYNAME'
 ```
 Arguments:
 - `city`: Name of the city to sample data fromi.e., the new city added in this incremental learning round), for example `--city 'Seattle'`.   
+
 The sampled trajectories will be saved to the directory: `./GCL_data/sampled_data/`.  
 ##### 2.1.3 Replace First Locations   
 Replace the first location in each sampled trajectory:
@@ -88,6 +91,7 @@ python ./GCL_data/replace_first_loc.py --city 'CITYNAME'
 ```
 Arguments:
 - `city`: Name of the city whose sampled data will be modified (i.e., the city used in step 2.1.2), for example `--city 'Seattle'`.
+
 For each trajectory, this script samples a new first location from the precomputed distribution (i.e., computed in step 2.1.1) and replaces the original one. The modified trajectories are saved to `./GCL_data/replaced_first_loc_data/`.   
 ##### 2.1.4 Generate Pseudo-Trajectories
 Finally, generate full pseudo-trajectories (refer to Eq. 5 in the paper) by running:
@@ -97,6 +101,7 @@ python ./MoveGCL/GCL_data/gen_pseudo_traj.py --city 'CITYNAME' --teacher_model '
 Arguments:
 - `city`: Name of the new city added in this generative continual learning round.   
 - `teacher_model`: Path to the teacher model used to generate pseudo-trajectories.   
+
 This script outputs the synthesized pseudo-trajectories and saves them to `./GCL_data/pseudo_traj/`.
 
 #### 2.2 Retrieve Frequently Selected Experts
@@ -106,6 +111,7 @@ Run the following script:
 ```
 Arguments:
 - `model_folder`: Path to the model to find the most frequently selected experts.   
+
 This will generate a file at `<model_folder>/froze_info_file/layer_max_indices.txt`, which records the most frequently selected expert for each layer. The layers are listed from bottom (closest to the input) to top (closest to the output).   
 
 #### 2.3 Continual learning
