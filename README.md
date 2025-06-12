@@ -29,10 +29,13 @@ The location vocabulary for each city is stored in the `./location_feature` dire
 
 ## ⚙️ Installation
 ### Environment
-- Python >= 3.9
-- torch == 2.0.0
+- Tested OS: Linux
+- Python >= 3.11
+- torch == 2.0.1
+- CUDA == 11.7
 ### Dependencies
-- Install Pytorch with the correct CUDA version.
+1. Install Pytorch with the correct CUDA version.
+2. Use the `pip install -r requirements.txt` command to install all of the Python modules and packages used in this project.
 ## 🏃 Model Training
 
 ### Stage-1 train base model
