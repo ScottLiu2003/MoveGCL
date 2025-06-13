@@ -38,6 +38,7 @@ The location vocabulary for each city is stored in the `./location_feature` dire
 ### Dependencies
 1. Install Pytorch with the correct CUDA version.
 2. Use the `pip install -r requirements.txt` command to install all of the Python modules and packages used in this project.
+
 ## 🏃 Model Training
 
 ### Stage-1 train base model
@@ -48,9 +49,9 @@ python ./MoveGCL/train_base_model.py \
   --n_layer 6 \
   --num_experts 4 \
   --city ['WashingtonDC','Seattle','Atlanta'] \
-  --train_root '/data0/liuyukun/MoveGCL/traj_data/train' \
-  --val_root '/data0/liuyukun/MoveGCL/traj_data/val' \
-  --test_root '/data0/liuyukun/MoveGCL/traj_data/test' \
+  --train_root './MoveGCL/traj_data/train' \
+  --val_root './MoveGCL/traj_data/val' \
+  --test_root './MoveGCL/traj_data/test' \
   --epoch 30 \
   --B 16 \
   --lr 1.2e-5
@@ -129,4 +130,11 @@ python ./continual_learning_copy.py \
 - `teacher_model`: Path to the pre-trained model f_old.  
 - `Increm_root`: Path to the pseudo-trajectories generated in 2.1.   
 - `city_Incerm`: Name of the city used in the continual learning phase.   
-- `experts_froze`: The list of frequently selected experts obtained in the Retrieve Frequently Selected Experts step. 
+- `experts_froze`: The list of frequently selected experts obtained in the Retrieve Frequently Selected Experts step.
+
+## 🔗 Link to Our Paper
+For a comprehensive overview of our approach, please refer to our paper:
+- [Hugging Face Papers](https://huggingface.co/papers/2506.06694)  
+- [arXiv](https://www.arxiv.org/abs/2506.06694)
+
+Thank you for your interest and support!
