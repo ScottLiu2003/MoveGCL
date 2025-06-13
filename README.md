@@ -49,9 +49,9 @@ python ./MoveGCL/train_base_model.py \
   --n_layer 6 \
   --num_experts 4 \
   --city ['WashingtonDC','Seattle','Atlanta'] \
-  --train_root './MoveGCL/traj_data/train' \
-  --val_root './MoveGCL/traj_data/val' \
-  --test_root './MoveGCL/traj_data/test' \
+  --train_root './traj_data/train' \
+  --val_root './traj_data/val' \
+  --test_root './traj_data/test' \
   --epoch 30 \
   --B 16 \
   --lr 1.2e-5
@@ -97,7 +97,7 @@ For each trajectory, this script samples a new first location from the precomput
 ##### 2.1.4 Generate Pseudo-Trajectories
 Finally, generate full pseudo-trajectories (refer to Eq. 5 in the paper) by running:
 ```bash
-python ./MoveGCL/GCL_data/gen_pseudo_traj.py --city 'CITYNAME' --teacher_model 'model_folder'
+python ./GCL_data/gen_pseudo_traj.py --city 'CITYNAME' --teacher_model 'model_folder'
 ```
 Arguments:
 - `city`: Name of the new city added in this generative continual learning round.   
@@ -120,7 +120,7 @@ Code for continual learning is implemented in<code>./MoveGCL/continual_learning.
 ```bash
 python ./continual_learning_copy.py \
   --teacher_model 'xxx' \
-  --Increm_root './MoveGCL/GCL_data/pseudo_traj/xxx' \
+  --Increm_root './GCL_data/pseudo_traj/xxx' \
   --city_Incerm 'xxx' \
   --experts_froze '[[0, 1, 2], [0, 1, 3], [1, 2, 3], [1, 2, 3], [1, 3], [0]]' \
   --epoch 30 \
@@ -134,7 +134,7 @@ python ./continual_learning_copy.py \
 
 ## 🔗 Link to Our Paper
 For a comprehensive overview of our approach, please refer to our paper:
-- [Hugging Face Papers](https://huggingface.co/papers/2506.06694)  
 - [arXiv](https://www.arxiv.org/abs/2506.06694)
+- [Hugging Face Papers](https://huggingface.co/papers/2506.06694)  
 
 Thank you for your interest and support!
